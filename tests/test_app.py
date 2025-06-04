@@ -27,3 +27,8 @@ def test_analyze_resume_empty(client):
     response = client.post("/analyze-resume", json={})
     assert response.status_code == 400
     assert response.json == {"error": "No resume text provided"}
+
+def test_analyze_resume_no_json(client):
+    response = client.post("/analyze-resume")
+    assert response.status_code == 400
+    assert response.json == {"error": "No resume text provided"}
