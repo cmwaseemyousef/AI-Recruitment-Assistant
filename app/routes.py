@@ -13,9 +13,13 @@ def health_check():
 
 @main_routes.route('/analyze-resume', methods=['POST'])
 def analyze():
-    data = request.json
+    """Analyze the provided resume text."""
+    # Safely parse JSON, falling back to an empty dict if parsing fails
+    data = request.get_json(silent=True) or {}
     resume_text = data.get("resume", "")
+
     if not resume_text:
         return {"error": "No resume text provided"}, 400
+
     result = analyze_resume(resume_text)
     return result
